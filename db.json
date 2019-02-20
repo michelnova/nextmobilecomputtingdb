@@ -1,0 +1,570 @@
+{
+    "navConfig": {
+      "views": [
+        {
+          "type": "navVC",
+          "id": "NAV01",
+          "views": [
+            {
+              "type": "vc",
+              "id": "VC001",
+              "title": "Login",
+              "configuration": {
+                "header": {
+                  "navBarHidden": true
+                },
+                "body": {
+                  "backgroundColor": "16:61:123",
+                  "widgets": [
+                    {
+                      "type": "space",
+                      "size": 10
+                    },
+                    {
+                      "type": "image",
+                      "height": 40,
+                      "image": "Logo"
+                    },
+                    {
+                      "type": "space",
+                      "size": 40
+                    },
+                    {
+                      "type": "label",
+                      "title": "Bienvenido",
+                      "titleColor": "255:255:255",
+                      "titleFontSize": 28,
+                      "titleAligment": "left"
+                    },
+                    {
+                      "type": "space",
+                      "size": 0
+                    },
+                    {
+                      "type": "label",
+                      "title": "Ingresa tu número de cliente o tarjeta de crédito",
+                      "titleColor": "255:255:255",
+                      "titleFontSize": 18,
+                      "titleAligment": "left"
+                    },
+                    {
+                      "type": "space",
+                      "size": 20
+                    },
+                    {
+                      "id": "TF1",
+                      "type": "textField",
+                      "title": null,
+                      "placeholder": "No. de cliente o tarjeta de credito",
+                      "keyboardType": "numeric",
+                      "secureTextEntry": true,
+                      "placeholderBackgroundColor": "255:255:255",
+                      "maxLenght": 10,
+                      "validCharacters": "number",
+                      "required": true,
+                      "regex": "^[0-9]{1,10}$"
+                    },
+                    {
+                      "type": "space",
+                      "size": 30
+                    },
+                    {
+                      "type": "button",
+                      "title": "Continuar",
+                      "action": {
+                        "validateFields": true,
+                        "validationFailureMessage": "Por favor ingresa tu número de cliente",
+                        "service": {
+                          "resourse": "getClientName",
+                          "httpMethod": "GET",
+                          "parameters": {
+                            "clientNumber": "{TF1}",
+                            "isOtherAccoubnts": "1"
+                          },
+                          "body": {},
+                          "acceptedStatus": {
+                            "key": "opstatus",
+                            "value": 0
+                          },
+                          "responseMapping": [
+                            "clientName"
+                          ],
+                          "success": {
+                            "destiny": {
+                              "id": "VC002",
+                              "routingType": "GOTO"
+                            }
+                          },
+                          "failure": {
+                            "alert": {
+                              "title": "Error",
+                              "message": "Hubo un error de comunicacion, intentalo más tarde",
+                              "ok": "Aceptar",
+                              "cancel": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "vc",
+              "id": "VC002",
+              "title": "Contraseña",
+              "configuration": {
+                "header": {
+                  "navBarHidden": true
+                },
+                "body": {
+                  "backgroundColor": "16:61:123",
+                  "widgets": [
+                    {
+                      "type": "space",
+                      "size": 10
+                    },
+                    {
+                      "type": "image",
+                      "height": 40,
+                      "image": "Logo"
+                    },
+                    {
+                      "type": "space",
+                      "size": 40
+                    },
+                    {
+                      "type": "label",
+                      "title": "Bienvenido de nuevo",
+                      "titleColor": "255:255:255",
+                      "titleFontSize": 24,
+                      "titleAligment": "left"
+                    },
+                    {
+                      "type": "space",
+                      "size": 10
+                    },
+                    {
+                      "id": "LBL1",
+                      "type": "label",
+                      "title": "{clientName}",
+                      "titleColor": "255:255:255",
+                      "titleFontSize": 18,
+                      "titleAligment": "left"
+                    },
+                    {
+                      "type": "space",
+                      "size": 20
+                    },
+                    {
+                      "id": "TF2",
+                      "type": "textField",
+                      "title": null,
+                      "placeholder": "Ingresa tu contraseña",
+                      "keyboardType": "default",
+                      "secureTextEntry": true,
+                      "placeHolderBackgroundColor": "255:255:255",
+                      "maxLenght": 8,
+                      "validCharacters": "alphanumeric",
+                      "required": true,
+                      "regex": "^[0-9a-zA-Z]{8}$"
+                    },
+                    {
+                      "type": "link",
+                      "title": "Cambiar de usuario",
+                      "titleColor": "255:255:255",
+                      "titleFontSize": 16,
+                      "action": {
+                        "destiny": {
+                          "id": "",
+                          "routingType": "BACK"
+                        }
+                      }
+                    },
+                    {
+                      "type": "space",
+                      "size": 60
+                    },
+                    {
+                      "type": "button",
+                      "title": "Ingresar",
+                      "action": {
+                        "validateFields": true,
+                        "validationFailureMessage": "Por favor ingresa tu password",
+                        "service": {
+                          "resourse": "login",
+                          "httpMethod": "GET",
+                          "parameters": {
+                            "password": "{TF2}"
+                          },
+                          "body": {},
+                          "acceptedStatus": {
+                            "key": "opstatus",
+                            "value": 0
+                          },
+                          "responseMapping": [],
+                          "success": {
+                              "destiny": {
+                                  "id": "TAB001",
+                                  "routingType": "GOTOROOT"
+                                }
+                          },
+                          "failure": {
+                            "alert": {
+                              "title": "Error",
+                              "message": "Hubo un error de comunicacion, intentalo más tarde",
+                              "ok": "Aceptar",
+                              "cancel": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "tabVC",
+          "id": "TAB001",
+          "views": [
+            {
+              "type": "navVC",
+              "id": "NAV02",
+              "configuration": {
+                "header": {
+                  "tabBarIcon": "https://www.iconfinder.com/icons/4171945/download/png/24"
+                }
+              }, 
+              "views": [
+                {
+                  "type": "vc",
+                  "id": "VC003",
+                  "title": "Dashboard",
+                  "configuration": {
+                    "header": {
+                      "navBarHidden": false,
+                      "largeTitle": true,
+                      "buttons": [
+                        
+                      ]
+                    },
+                    "body": {
+                      "backgroundColor": "255:255:255",
+                      "margin": 10,
+                      "widgets": [
+                        {
+                          "type": "space",
+                          "size": 10
+                        },
+                        {
+                          "type": "space",
+                          "size": 20
+                        },
+                        {
+                          "type": "balance",
+                          "accounts": [
+                            {
+                              "type": "Tarjeta débito",
+                              "alias": "Mi nómina **487",
+                              "balance": "$3,500.00",
+                              "availableCredit": "$2,600.00"
+                            },
+                            {
+                              "type": "Tarjeta crédito",
+                              "alias": "Mí tarjeta oro **434",
+                              "balance": "$3,500.00 MXN",
+                              "availableCredit": "$26,500.00 MXN"
+                            },
+                            {
+                              "type": "Afore",
+                              "alias": "Mi ahorro  NSS **771",
+                              "balance": "$356,400.00 MXN"
+                            },
+                            {
+                              "type": "Inversión",
+                              "alias": "Mi inversión a la vista **123",
+                              "balance": "$32,200.00 MXN"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "space",
+                          "size": 10
+                        },
+                        {
+                          "type": "expenses",
+                          "title": "Mis gastos",
+                          "month": "Febrero",
+                          "chartTitle": "Mis gastos del Mes",
+                          "chartDescription": "Ingresos vs Gastos"
+                        },
+                        {
+                          "type": "space",
+                          "size": 10
+                        },
+                        {
+                          "type": "payments",
+                          "cards": [
+                            {
+                              "id": "card_b_1002",
+                              "alias": "oro **434",
+                              "balance": "$500.00",
+                              "minimumPay": "$3,500.00"
+                            },
+                            {
+                              "id": "card_b_1001",
+                              "alias": "platino **567",
+                              "balance": "$1,500.00",
+                              "minimumPay": "$4,700.00"
+                            },
+                            {
+                              "id": "card_b_1001",
+                              "alias": "black **837",
+                              "balance": "$3,800.00",
+                              "minimumPay": "$18,146.00"
+                            }
+                          ],
+                          "button": {
+                            "buttonTitle": "Pagar Tarjeta"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "navVC",
+              "id": "NAV03",
+              "configuration": {
+                "header": {
+                  "tabBarIcon": "https://www.iconfinder.com/icons/197238/download/png/24"
+                }
+              },
+              "views": [
+                {
+                  "type": "vc",
+                  "id": "VC004",
+                  "title": "Balances",
+                  "configuration": {
+                    "header": {
+                      "navBarHidden": false
+                    },
+                    "body": {
+                      "margin": 0,
+                      "backgroundColor": "255:255:255",
+                      "widgets": [
+                        {
+                          "type": "space",
+                          "size": 10
+                        },
+                        {
+                          "type": "tableBalance",
+                          "backgroundColor": "230:230:230",
+                          "height": "500",
+                          "accounts": [
+                            {
+                              "type": "debito",
+                              "alias": "Cta Maestra **739",
+                              "balance": "$400.40",
+                              "colorIndicator": "21:206:241",
+                              "image": "perfiles1"
+                            },
+                            {
+                              "type": "debito",
+                              "alias": "Cta Maestra **473",
+                              "balance": "$45,009.40",
+                              "colorIndicator": "21:206:241",
+                              "image": "perfiles1"
+                            },
+                            {
+                              "type": "debito",
+                              "alias": "Cta Maestra **839",
+                              "balance": "$1,000.00",
+                              "colorIndicator": "21:206:241",
+                              "image": "perfiles1"
+                            },
+                            {
+                              "type": "credito",
+                              "alias": "Tarjeta ORO **653",
+                              "balance": "$3,005.32",
+                              "colorIndicator": "183:114:213",
+                              "image": "clasica1"
+                            },
+                            {
+                              "type": "credito",
+                              "alias": "Tarjeta Clasica **182",
+                              "balance": "$11,093.59",
+                              "colorIndicator": "183:114:213",
+                              "image": "clasica1"
+                            },
+                            {
+                              "type": "rewards",
+                              "alias": "Rewards **788",
+                              "balance": "$100.48",
+                              "colorIndicator": "21:206:241",
+                              "image": "rewards1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "navVC",
+              "id": "NAV04",
+              "configuration": {
+                "header": {
+                  "tabBarIcon": "https://www.iconfinder.com/icons/2959857/download/png/24"
+                }
+              },
+              "views": [
+                {
+                  "type": "vc",
+                  "id": "VC005",
+                  "title": "Payments",
+                  "configuration": {
+                    "header": {
+                      "navBarHidden": false
+                    },
+                    "body": {
+                      "backgroundColor": "255:255:255",
+                      "widgets": [
+                        {
+                          "type": "space",
+                          "size": 10
+                        },
+                        {
+                          "type": "label",
+                          "title": "Cuenta Origen",
+                          "titleAligment": "left",
+                          "titleFontSize": 17
+                        },
+                        {
+                          "type": "selector",
+                          "style": "screen",
+                          "title": "Elige una cuenta origen",
+                          "subtitle": "",
+                          "data": [
+                            {
+                              "name": "cuenta 1"
+                            },
+                            {
+                              "name": "cuenta 2"
+                            },
+                            {
+                              "name": "cuenta 3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "space",
+                          "size": 20
+                        },
+                        {
+                          "type": "label",
+                          "title": "Cuenta Destino",
+                          "titleAligment": "left",
+                          "titleFontSize": 17
+                        },
+                        {
+                          "type": "selector",
+                          "style": "screen",
+                          "title": "Elige una cuenta destino",
+                          "subtitle": "",
+                          "data": [
+                            {
+                              "name": "cuenta 1"
+                            },
+                            {
+                              "name": "cuenta 2"
+                            },
+                            {
+                              "name": "cuenta 3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "space",
+                          "size": 20
+                        },
+                        {
+                          "type": "textField",
+                          "title": "Ingresa el monto",
+                          "placeholder": "Monto",
+                          "keyboardType": "numeric",
+                          "placeholderBackgroundColor": "243:244:246"
+                        },
+                        {
+                          "type": "space",
+                          "size": 40
+                        },
+                        {
+                          "type": "button",
+                          "title": "Continuar"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "navVC",
+              "id": "NAV05",
+              "configuration": {
+                "header": {
+                  "tabBarIcon": "https://www.iconfinder.com/icons/126574/download/png/24"
+                }
+              },
+              "views": [
+                {
+                  "type": "vc",
+                  "id": "VC006",
+                  "title": "Más",
+                  "configuration": {
+                    "header": {
+                      "navBarHidden": false
+                    },
+                    "body": {
+                      "backgroundColor": "255:255:255",
+                      "widgets": [
+                        {
+                          "type": "button",
+                          "title": "Salir",
+                          "action": {
+                            "destiny": {
+                              "id": "NAV01",
+                              "routingType": "GOTOROOT"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+       "initialView": "NAV01",
+       "endpoint": "http://localhost:3000"
+    },
+    "getClientName": {
+      "opstatus": 0,
+        "clientName": "M**** F**** T*****"
+    },
+    "login": {
+      "opstatus": 0,
+      "success": true
+    }
+  }
